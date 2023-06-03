@@ -4,21 +4,21 @@ import csv
 
 vrFileNames = os.listdir('validationRules')
 
-vrList = [['Rule Name', 'Active', 'Error Condition Formula', 'Error Message']]
+xmlFields = ['fullName', 'active', 'description', 'errorConditionFormula', 'errorDisplayField', 'errorMessage']
+
+def findField(x):
+    for i in range(root.__len__()):
+        if root[i].tag.__contains__(x):
+            return root[i].text
+
+vrList = [['Rule Name', 'Active', 'Description', 'Error Condition Formula', 'Error Displayed Field', 'Error Message']]
 
 for vr in vrFileNames:
     tree = ET.parse('validationRules/'+vr)
     root = tree.getroot()
     vrLine = []
-    for i in range(root.__len__()):
-        if (root[i].tag.__contains__('fullName')):
-            vrLine.append(root[i].text)
-        elif (root[i].tag.__contains__('active')):
-            vrLine.append(root[i].text)
-        elif (root[i].tag.__contains__('errorConditionFormula')):
-            vrLine.append(root[i].text)
-        elif (root[i].tag.__contains__('errorMessage')):
-            vrLine.append(root[i].text)
+    for field in xmlFields:
+         vrLine.append(findField(field))
     vrList.append(vrLine)
 
 csvFile = os.path.basename(os.getcwd()) + 'ValidationRules.csv'

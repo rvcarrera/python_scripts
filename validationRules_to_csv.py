@@ -4,7 +4,7 @@ import csv
 
 vrFileNames = os.listdir('validationRules')
 
-xmlFields = ['fullName', 'active', 'description', 'errorConditionFormula', 'errorDisplayField', 'errorMessage']
+vrFields = ['fullName', 'active', 'description', 'errorConditionFormula', 'errorDisplayField', 'errorMessage']
 
 def findField(x):
     for i in range(root.__len__()):
@@ -16,9 +16,7 @@ vrList = [['Rule Name', 'Active', 'Description', 'Error Condition Formula', 'Err
 for vr in vrFileNames:
     tree = ET.parse('validationRules/'+vr)
     root = tree.getroot()
-    vrLine = []
-    for field in xmlFields:
-         vrLine.append(findField(field))
+    vrLine = [findField(field) for field in vrFields]
     vrList.append(vrLine)
 
 csvFile = os.path.basename(os.getcwd()) + 'ValidationRules.csv'
